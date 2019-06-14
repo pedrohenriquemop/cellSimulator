@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>txt generator</title>
+    <style>
+      textarea{
+        width: 700px;
+        height: 400px;
+      }
+
+      #result{
+        color: red;
+        font-family: "Arial";
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Turorial:</h2>
+    <p><strong>Coloque entre "&" para um parágrafo.</strong> Ex.: &oi& gera um paragrafo com 'oi'.</p>
+    <p><strong>Coloque entre "[algumacoisa]" e "]" para gerar um link.</strong> Ex.: [oi]bom dia] gera um link 'bom dia' para 'oi'.</p>
+    <textarea>$kk$$eae [fitz]geralt]$</textarea>
+    <button>Converter</button>
+    <textarea id='result'>Resultado</textarea>
+  </body>
+  <script>
+    let txt = document.querySelector('textarea')
+    let res = document.querySelector('#result')
+    let btn = document.querySelector('button')
+
+    function faz(){
+      let t = txt.value
+      let n = ''
+      let link = ''
+      let x = 0;
+      for(let i = 0; i < t.length; i++){
+        if(t.charAt(i) == '$' && x == 0){
+          n += '<p>'
+          x = 1
+        }
+        else if(t.charAt(i) == '$' && x == 1){
+          n += '</p>'
+          x = 0
+        }
+        else if(t.charAt(i) == '['){
+          for(i+=1;t.charAt(i) != ']'; i++){
+            link += t.charAt(i)
+          }
+          n += '<span class=\'link\' data-link="'+link+'">'
+        }
+        else if(t.charAt(i) == ']') n += '</span>'
+        else n += t.charAt(i)
+      }
+      res.value = n
+    }
+
+    btn.addEventListener('click', faz)
+  </script>
+</html>
